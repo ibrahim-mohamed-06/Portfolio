@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ibrahim Mohamed | Full-Stack Web Developer & Software Engineer</title>
+  
+  <!-- Google Fonts Preconnect & Stylesheets -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playwrite+BE+WAL+Guides&family=Playwrite+CL:wght@100..400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP & ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepDark: '#070913',
+            surfaceCard: 'rgba(15, 23, 42, 0.65)',
+            electricCyan: '#06b6d4',
+            neonCyan: '#22d3ee',
+            ultraviolet: '#8b5cf6',
+            neonPurple: '#a855f7',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            signature: ['"Playwrite BE WAL Guides"', 'cursive'],
+            accent: ['"Playwrite CL"', 'cursive'],
+          },
+          boxShadow: {
+            'glow-cyan': '0 0 35px -5px rgba(6, 182, 212, 0.35)',
+            'glow-purple': '0 0 35px -5px rgba(139, 92, 246, 0.35)',
+            'glow-card': '0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(34, 211, 238, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    body {
+      background-color: #070913;
+      color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      selection-background-color: #06b6d4;
+    }
+    ::selection {
+      background: #06b6d4;
+      color: #070913;
+    }
+    .font-signature {
+      font-family: 'Playwrite BE WAL Guides', cursive;
+    }
+    .font-accent {
+      font-family: 'Playwrite CL', cursive;
+    }
+    /* Subtle grid line overlay */
+    .cyber-mesh-bg {
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 100% 50%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+    }
+    /* Glassmorphism token */
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .glass-panel-interactive {
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .glass-panel-interactive:hover {
+      border-color: rgba(34, 211, 238, 0.35);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(34, 211, 238, 0.2);
+    }
+    /* Dynamic Gradient Heading */
+    .gradient-heading {
+      background: linear-gradient(135deg, #ffffff 15%, #22d3ee 65%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-accent-text {
+      background: linear-gradient(135deg, #22d3ee 20%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Smooth Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070913;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #06b6d4;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen cyber-mesh-bg text-slate-100 antialiased selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- Interactive Constellation Particles Background Canvas -->
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
+
+  <!-- Ambient Aurora Glow Orbs -->
+  <div class="fixed top-0 left-1/4 w-[650px] h-[650px] bg-cyan-500/10 rounded-full blur-[160px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-1/4 right-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[170px] pointer-events-none -z-10"></div>
+
+  <!-- Custom Notification Toast -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-28 opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3.5 bg-slate-900/95 border border-cyan-500/40 shadow-glow-cyan text-white px-5 py-3.5 rounded-2xl backdrop-blur-2xl">
+    <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+      <i id="toastIcon" class="fa-solid fa-check text-sm"></i>
+    </div>
+    <span id="toastMessage" class="text-sm font-medium tracking-wide">Action executed successfully</span>
+  </div>
+
+  <header class="fixed top-0 left-0 w-full z-40 transition-all duration-300 glass-panel border-b border-white/5 py-4">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      
+      <!-- Brand Logo with Playwrite Signature Font -->
+      <a href="#hero" class="group flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 flex items-center justify-center text-slate-950 font-black text-base shadow-glow-cyan transform group-hover:scale-105 group-hover:rotate-6 transition-all duration-300">
+          IM
+        </div>
+        <div class="flex flex-col">
+          <span class="font-signature text-2xl text-cyan-400 tracking-wide font-normal group-hover:text-cyan-300 transition-colors">
+            Ibrahim.dev
+          </span>
+          <span class="text-[9px] tracking-widest text-slate-400 font-bold uppercase -mt-1">Full-Stack Engineer</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden md:flex items-center space-x-9 text-sm font-medium text-slate-300">
+        <a href="#about" class="hover:text-cyan-300 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-cyan-400 hover:after:w-full after:transition-all">About</a>
+        <a href="#skills" class="hover:text-cyan-300 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-cyan-400 hover:after:w-full after:transition-all">Skills</a>
+        <a href="#projects" class="hover:text-cyan-300 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-cyan-400 hover:after:w-full after:transition-all">Projects</a>
+        <a href="#contact" class="hover:text-cyan-300 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-cyan-400 hover:after:w-full after:transition-all">Contact</a>
+      </nav>
+
+      <!-- Desktop Magnetic CTA Button -->
+      <div class="flex items-center space-x-4">
+        <a href="#contact" class="magnetic-btn relative group hidden sm:inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-400 via-teal-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 shadow-glow-cyan transition-all duration-300 transform hover:-translate-y-0.5">
+          <span>Let's Connect</span>
+          <i class="fa-solid fa-arrow-right text-[11px] group-hover:translate-x-1 transition-transform"></i>
+        </a>
+        
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" aria-label="Toggle navigation menu" class="md:hidden text-slate-300 hover:text-cyan-400 p-2 text-xl focus:outline-none transition-colors">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden px-6 pt-4 pb-6 glass-panel border-t border-white/5 space-y-4 text-center mt-3">
+      <a href="#about" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium mobile-link">About</a>
+      <a href="#skills" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium mobile-link">Skills</a>
+      <a href="#projects" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium mobile-link">Projects</a>
+      <a href="#contact" class="block py-2 text-slate-300 hover:text-cyan-400 font-medium mobile-link">Contact</a>
+      <a href="#contact" class="inline-block w-full py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-400 to-indigo-500 text-slate-950 mobile-link shadow-glow-cyan">
+        Let's Connect
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content Structure -->
+  <main class="relative z-10 pt-24 md:pt-28">
+
+    <section id="hero" class="min-h-[92vh] flex items-center justify-center px-6 md:px-12 relative overflow-hidden py-16">
+      <div class="max-w-5xl mx-auto w-full flex flex-col items-center text-center">
+
+        <!-- Top Status Pill Badge -->
+        <div class="hero-element mb-8">
+          <div class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-slate-900/80 border border-slate-700/60 text-slate-300 text-xs sm:text-sm font-medium shadow-lg backdrop-blur-md">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
+            </span>
+            <span>Available for High-Impact Roles & Projects</span>
+            <span class="text-slate-500">•</span>
+            <span class="text-cyan-400 flex items-center gap-1">
+              <i class="fa-solid fa-location-dot text-[11px]"></i> Cairo, Egypt
+            </span>
+          </div>
+        </div>
+
+        <!-- Cursive "Hello, I am" with Guided Lines font -->
+        <div class="hero-element mb-1 select-none">
+          <span class="font-signature text-4xl sm:text-5xl md:text-6xl text-cyan-400 tracking-wider inline-block">
+            Hello, I am
+          </span>
+        </div>
+
+        <!-- Main Huge Name -->
+        <div class="hero-element mb-4">
+          <h1 class="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none">
+            <span class="text-white">Ibrahim </span><span class="bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">Mohamed</span>
+          </h1>
+        </div>
+
+        <!-- Subtitle with side divider lines -->
+        <div class="hero-element flex items-center justify-center gap-4 w-full max-w-lg mb-6">
+          <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-cyan-500/40 to-cyan-400"></div>
+          <h2 class="text-lg sm:text-2xl font-semibold tracking-wide text-indigo-200">
+            Full-Stack Web Developer
+          </h2>
+          <div class="h-[1px] flex-1 bg-gradient-to-l from-transparent via-indigo-500/40 to-indigo-400"></div>
+        </div>
+
+        <!-- Narrative Description -->
+        <p class="hero-element max-w-2xl text-slate-400 text-base sm:text-lg font-normal leading-relaxed mb-10">
+          Building scalable web architectures, responsive interfaces, and real-world digital solutions. Bridging modern frontend aesthetics with resilient backend systems.
+        </p>
+
+        <!-- Main Action Buttons -->
+        <div class="hero-element flex flex-wrap items-center justify-center gap-4 mb-12">
+          <a href="#projects" class="px-8 py-3.5 rounded-2xl text-sm font-bold bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-glow-cyan transition-all duration-300 flex items-center gap-2 transform hover:-translate-y-0.5">
+            <span>View Projects</span>
+            <i class="fa-solid fa-arrow-down text-xs"></i>
+          </a>
+          <a href="#contact" class="px-8 py-3.5 rounded-2xl text-sm font-semibold bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-white hover:text-cyan-300 hover:border-cyan-500/50 transition-all duration-300 flex items-center gap-2 transform hover:-translate-y-0.5">
+            <span>Contact Me</span>
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Contact Quick Bar Matching Screenshot -->
+        <div class="hero-element flex flex-wrap items-center justify-center gap-3 w-full max-w-4xl">
+          <!-- GitHub Link -->
+          <a href="https://github.com/Ibrahim-06" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-400/50 text-slate-300 hover:text-white transition-all text-xs sm:text-sm font-medium flex items-center gap-2.5 group">
+            <i class="fa-brands fa-github text-base text-slate-300 group-hover:scale-110 transition-transform"></i>
+            <span>GitHub</span>
+          </a>
+
+          <!-- LinkedIn Link -->
+          <a href="https://www.linkedin.com/in/ibrahim-mohamed-211-" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-300 transition-all text-xs sm:text-sm font-medium flex items-center gap-2.5 group">
+            <div class="w-4 h-4 rounded bg-cyan-500 text-slate-950 flex items-center justify-center text-[10px] font-bold">in</div>
+            <span>LinkedIn</span>
+          </a>
+
+          <!-- Email with Copy Action -->
+          <button onclick="copyToClipboard('Ibrahim.06.dev@gmail.com', 'Email address copied!')" class="px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-purple-400/50 text-slate-300 hover:text-purple-300 transition-all text-xs sm:text-sm font-medium flex items-center gap-2.5 group" title="Click to copy email">
+            <i class="fa-solid fa-envelope text-purple-400 group-hover:scale-110 transition-transform"></i>
+            <span>Ibrahim.06.dev@gmail.com</span>
+            <i class="fa-regular fa-copy text-xs text-slate-500 group-hover:text-purple-300 ml-1"></i>
+          </button>
+
+          <!-- Phone with Copy/Call -->
+          <a href="tel:+201210811640" class="px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-emerald-400/50 text-slate-300 hover:text-emerald-300 transition-all text-xs sm:text-sm font-medium flex items-center gap-2.5 group">
+            <i class="fa-solid fa-phone text-emerald-400 group-hover:scale-110 transition-transform"></i>
+            <span>+20 12 108 116 40</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="about" class="py-24 px-6 md:px-12 relative">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="section-reveal flex flex-col items-center mb-16 text-center">
+          <span class="font-accent text-cyan-400 text-lg sm:text-xl font-normal mb-1">Architectural Philosophy</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">About My Craft</h2>
+          <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-500 rounded-full mt-3"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          <!-- Narrative Left Column -->
+          <div class="section-reveal lg:col-span-7 glass-panel p-8 sm:p-10 rounded-3xl relative flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="text-xs uppercase tracking-widest text-cyan-400 font-bold flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                  Engineering Ethos
+                </span>
+                <span class="font-signature text-3xl text-white/10 select-none">Ibrahim</span>
+              </div>
+
+              <h3 class="text-2xl font-bold text-white mb-5 leading-snug">
+                Bridging rigorous academic computer science with high-velocity web engineering.
+              </h3>
+
+              <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+                <p>
+                  As a Computer Science student at Egyptian Chinese University based in Nasr City, Cairo, my engineering focus centers on constructing resilient, production-grade applications that withstand production loads and eliminate technical debt.
+                </p>
+                <p>
+                  I view Full-Stack development not merely as connecting endpoints, but as a deliberate discipline of schema normalization, strict state management, defensive authentication pipelines (JWT/RBAC), and low-latency rendering.
+                </p>
+                <p>
+                  Whether architecting dynamic QR token workflows, multi-branch relational queries in PostgreSQL/MySQL, or crafting sleek micro-interactions with React and Tailwind, I ensure every layer is modular, intuitive, and performant.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pillars Highlight Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/10">
+              <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
+                <div class="text-cyan-400 font-bold text-lg mb-0.5">Clean Code</div>
+                <div class="text-xs text-slate-400">SOLID & DRY Architecture</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
+                <div class="text-purple-400 font-bold text-lg mb-0.5">Relational DBs</div>
+                <div class="text-xs text-slate-400">Optimized Joins & Indexing</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
+                <div class="text-emerald-400 font-bold text-lg mb-0.5">Zero-Trust</div>
+                <div class="text-xs text-slate-400">RBAC & Token Security</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column Cards -->
+          <div class="section-reveal lg:col-span-5 flex flex-col gap-6">
+            
+            <!-- Personal Signature Badge Card -->
+            <div class="glass-panel p-8 rounded-3xl border-l-4 border-l-cyan-400 relative overflow-hidden flex flex-col justify-center">
+              <div class="text-cyan-400/30 text-4xl mb-2 font-serif">“</div>
+              <p class="font-accent text-lg sm:text-xl text-cyan-200/90 leading-relaxed">
+                Code should be as elegant to read under the hood as it is effortless to navigate on screen.
+              </p>
+              <div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                <div>
+                  <div class="font-signature text-2xl text-cyan-400 font-normal">Ibrahim Mohamed</div>
+                  <div class="text-[11px] text-slate-400 font-mono">Full-Stack Web Architect</div>
+                </div>
+                <div class="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- University & Focus Profile Card -->
+            <div class="glass-panel p-7 rounded-3xl space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                <span class="text-xs text-slate-400 font-medium">Institution</span>
+                <span class="text-xs text-cyan-300 font-semibold text-right">Egyptian Chinese University</span>
+              </div>
+              <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                <span class="text-xs text-slate-400 font-medium">Field of Study</span>
+                <span class="text-xs text-slate-200 font-semibold">Computer Science</span>
+              </div>
+              <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                <span class="text-xs text-slate-400 font-medium">Specialization</span>
+                <span class="text-xs text-purple-300 font-semibold">Full-Stack Web Systems</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-400 font-medium">Location</span>
+                <span class="text-xs text-emerald-300 font-semibold">Nasr City, Cairo, Egypt</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="skills" class="py-24 px-6 md:px-12 bg-slate-950/40 relative">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="section-reveal flex flex-col items-center mb-16 text-center">
+          <span class="font-accent text-cyan-400 text-lg sm:text-xl font-normal mb-1">Technical Stack</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Categorized Skills Matrix</h2>
+          <p class="text-slate-400 text-sm max-w-lg mt-3">Production-proven languages, frameworks, databases, and architectural standards.</p>
+          <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full mt-3"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
+
+          <!-- Category 1: Frontend Engineering -->
+          <div class="skill-matrix-card glass-panel glass-panel-interactive p-8 rounded-3xl relative group">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-display"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white">Frontend Engineering</h3>
+                <span class="text-xs text-slate-400">Dynamic User Interfaces & Client Architecture</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2.5">
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-html5 text-orange-500"></i> HTML5
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-css3-alt text-blue-500"></i> CSS3
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-js text-yellow-400"></i> JavaScript (ES6+)
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-code text-blue-400"></i> TypeScript
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-react text-cyan-400"></i> React.js
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-wind text-teal-400"></i> Tailwind CSS
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-mobile-screen text-indigo-400"></i> Responsive UI Design
+              </span>
+            </div>
+          </div>
+
+          <!-- Category 2: Backend & APIs -->
+          <div class="skill-matrix-card glass-panel glass-panel-interactive p-8 rounded-3xl relative group">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-server"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white">Backend & APIs</h3>
+                <span class="text-xs text-slate-400">Server Logic & Restful Micro-Services</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2.5">
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-node-js text-green-500"></i> Node.js
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-slate-300"></i> Express.js
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-network-wired text-cyan-400"></i> RESTful API Architecture
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-diagram-project text-purple-400"></i> Middleware Pipelines
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-shuffle text-emerald-400"></i> Asynchronous Event Handlers
+              </span>
+            </div>
+          </div>
+
+          <!-- Category 3: Relational Databases -->
+          <div class="skill-matrix-card glass-panel glass-panel-interactive p-8 rounded-3xl relative group">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 text-xl group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-database"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white">Relational Databases</h3>
+                <span class="text-xs text-slate-400">Data Architecture & Query Optimization</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2.5">
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-teal-400 hover:text-teal-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-table text-blue-400"></i> MySQL
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-teal-400 hover:text-teal-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-cubes text-cyan-400"></i> PostgreSQL
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-teal-400 hover:text-teal-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-sitemap text-teal-400"></i> Schema Normalization (3NF)
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-teal-400 hover:text-teal-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-gauge-high text-yellow-400"></i> Query Optimization & Indexing
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-teal-400 hover:text-teal-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-link text-indigo-400"></i> Foreign Key Constraints
+              </span>
+            </div>
+          </div>
+
+          <!-- Category 4: Security & Engineering Tools -->
+          <div class="skill-matrix-card glass-panel glass-panel-interactive p-8 rounded-3xl relative group">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white">Security & Tools</h3>
+                <span class="text-xs text-slate-400">Authorization Standards & Developer Tooling</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2.5">
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-purple-400 hover:text-purple-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-user-shield text-cyan-400"></i> Role-Based Access Control (RBAC)
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-purple-400 hover:text-purple-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-key text-yellow-400"></i> JWT Authentication
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-purple-400 hover:text-purple-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-lock text-purple-400"></i> bcrypt Password Hashing
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-purple-400 hover:text-purple-300 transition-colors flex items-center gap-2">
+                <i class="fa-brands fa-git-alt text-red-500"></i> Git & GitHub
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-purple-400 hover:text-purple-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane text-orange-400"></i> Postman API Testing
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/60 text-slate-200 text-xs font-medium hover:border-purple-400 hover:text-purple-300 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-yellow-300"></i> Vite
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="projects" class="py-24 px-6 md:px-12 relative">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="section-reveal flex flex-col items-center mb-16 text-center">
+          <span class="font-accent text-cyan-400 text-lg sm:text-xl font-normal mb-1">Engineered Case Studies</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Featured Projects</h2>
+          <p class="text-slate-400 text-sm max-w-lg mt-3">Production systems crafted with role separation, secure transactions, and relational robustness.</p>
+          <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-500 rounded-full mt-3"></div>
+        </div>
+
+        <div class="space-y-12">
+
+          <!-- ==============================================
+               PROJECT 1: Gradify
+               ============================================== -->
+          <div class="project-card glass-panel glass-panel-interactive rounded-3xl p-7 sm:p-10 border border-white/10 hover:border-cyan-500/40">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              <!-- Interactive Visual / UI Terminal Simulation -->
+              <div class="lg:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950/60 rounded-2xl p-6 border border-indigo-500/30 relative overflow-hidden group">
+                <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                  </div>
+                  <span class="text-[11px] font-mono text-cyan-400 font-semibold tracking-wider">PROJECT // 01</span>
+                </div>
+
+                <div class="space-y-3 font-mono text-xs">
+                  <!-- Attendance verification mockup -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">Attendance Protocol:</span>
+                    <span class="text-cyan-300 font-semibold flex items-center gap-1.5">
+                      <i class="fa-solid fa-qrcode text-xs"></i> 30s Dynamic QR
+                    </span>
+                  </div>
+
+                  <!-- Multi-Role Status -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">Active RBAC Tier:</span>
+                    <span class="text-purple-300">Admin | Instructor | Student</span>
+                  </div>
+
+                  <!-- Grading Engine computation -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">GPA Compute Matrix:</span>
+                    <span class="text-emerald-400 font-bold">Automated (Real-Time)</span>
+                  </div>
+                </div>
+
+                <!-- Simulation Footer -->
+                <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                  <span>Schema: <strong class="text-slate-200">Deadlock-Free 3NF</strong></span>
+                  <span class="text-cyan-400 font-medium">JWT Secured</span>
+                </div>
+              </div>
+
+              <!-- Content Narrative -->
+              <div class="lg:col-span-7 flex flex-col justify-center">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                    Academic Platform
+                  </span>
+                  <span class="text-xs text-slate-400 font-medium">Full-Stack Developer</span>
+                </div>
+
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3">
+                  Gradify — University Course & Academic Management Platform
+                </h3>
+
+                <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+                  An academic infrastructure suite built to automate lecture attendance, course enrollments, and semester GPA calculations across three independent institutional tiers.
+                </p>
+
+                <!-- Key Implementation Bullet Points -->
+                <ul class="space-y-3 text-xs sm:text-sm text-slate-300 mb-6">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-shield-halved text-cyan-400 text-xs mt-1.5"></i>
+                    <span><strong>Dynamic QR Code Attendance System:</strong> Generates time-sensitive (30s expiry) rotating cryptographic QR codes to completely prevent proxy attendance in lecture halls.</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-shield-halved text-cyan-400 text-xs mt-1.5"></i>
+                    <span><strong>Multi-Role RBAC Portals:</strong> Isolated dashboards tailored for University Admins (course/instructor assignment), Professors (grading, lectures), and Students (transcripts, schedule).</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-shield-halved text-cyan-400 text-xs mt-1.5"></i>
+                    <span><strong>Automated GPA & Grade Matrix:</strong> Handles dynamic weighting algorithms for credit hours, midterms, and semester final computations without manual recalculations.</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-shield-halved text-cyan-400 text-xs mt-1.5"></i>
+                    <span><strong>Deadlock-Free Relational Schema:</strong> Highly normalized tables in PostgreSQL/MySQL enforcing integrity on concurrent enrollment bursts.</span>
+                  </li>
+                </ul>
+
+                <!-- Tech Badges -->
+                <div class="flex flex-wrap gap-2 pt-3 border-t border-white/10">
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">React</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Node.js</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Express</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">PostgreSQL / MySQL</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Tailwind CSS</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ==============================================
+               PROJECT 2: Clinic & Patient Management System
+               ============================================== -->
+          <div class="project-card glass-panel glass-panel-interactive rounded-3xl p-7 sm:p-10 border border-white/10 hover:border-cyan-500/40">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              <!-- Interactive Visual / UI Terminal Simulation -->
+              <div class="lg:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950/60 rounded-2xl p-6 border border-cyan-500/30 relative overflow-hidden group">
+                <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                  </div>
+                  <span class="text-[11px] font-mono text-cyan-400 font-semibold tracking-wider">PROJECT // 02</span>
+                </div>
+
+                <div class="space-y-3 font-mono text-xs">
+                  <!-- Scheduling Status -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">Conflict Engine:</span>
+                    <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Zero-Overlaps Active
+                    </span>
+                  </div>
+
+                  <!-- EMR Confidentiality -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">EMR Security:</span>
+                    <span class="text-cyan-300">Encrypted Diagnostic Records</span>
+                  </div>
+
+                  <!-- Roles -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">Workflows:</span>
+                    <span class="text-indigo-300">Doctor Diagnosis / Reception Queue</span>
+                  </div>
+                </div>
+
+                <!-- Simulation Footer -->
+                <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                  <span>Confidentiality: <strong class="text-slate-200">HIPAA Compliant Standard</strong></span>
+                  <span class="text-cyan-400 font-medium">Relational EMR</span>
+                </div>
+              </div>
+
+              <!-- Content Narrative -->
+              <div class="lg:col-span-7 flex flex-col justify-center">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    Healthcare System
+                  </span>
+                  <span class="text-xs text-slate-400 font-medium">Full-Stack Developer</span>
+                </div>
+
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3">
+                  Clinic & Patient Management System (EMR)
+                </h3>
+
+                <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+                  An electronic medical record and clinical scheduling platform engineered to streamline daily patient consultations, billing transitions, and diagnostic history tracking.
+                </p>
+
+                <!-- Key Implementation Bullet Points -->
+                <ul class="space-y-3 text-xs sm:text-sm text-slate-300 mb-6">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyan-400 text-xs mt-1.5"></i>
+                    <span><strong>Smart Appointment Scheduling:</strong> Algorithmic slot validation that prevents doctor booking conflicts and handles automated reschedule alerts.</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyan-400 text-xs mt-1.5"></i>
+                    <span><strong>Encrypted Electronic Health Records (EMR):</strong> Centralized patient case notes, lab diagnoses, and prescription logs protected with field-level privacy.</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyan-400 text-xs mt-1.5"></i>
+                    <span><strong>Dual Doctor / Receptionist Workflows:</strong> Strict privilege compartmentalization ensuring reception staff manage queues without accessing sensitive medical records.</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-check text-cyan-400 text-xs mt-1.5"></i>
+                    <span><strong>Real-Time Waiting Room Queue:</strong> Dynamic status updates indicating consultation statuses and estimated waiting times.</span>
+                  </li>
+                </ul>
+
+                <!-- Tech Badges -->
+                <div class="flex flex-wrap gap-2 pt-3 border-t border-white/10">
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">React</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Node.js</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Express</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">MySQL / PostgreSQL</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Tailwind CSS</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ==============================================
+               PROJECT 3: Zoots
+               ============================================== -->
+          <div class="project-card glass-panel glass-panel-interactive rounded-3xl p-7 sm:p-10 border border-white/10 hover:border-cyan-500/40">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              <!-- Interactive Visual / UI Terminal Simulation -->
+              <div class="lg:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-purple-950/60 rounded-2xl p-6 border border-purple-500/30 relative overflow-hidden group">
+                <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                  </div>
+                  <span class="text-[11px] font-mono text-cyan-400 font-semibold tracking-wider">PROJECT // 03</span>
+                </div>
+
+                <div class="space-y-3 font-mono text-xs">
+                  <!-- Search speed -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">Catalog Filter:</span>
+                    <span class="text-cyan-300 font-semibold">Instant Multi-Attribute</span>
+                  </div>
+
+                  <!-- Cart state -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">Cart Sync:</span>
+                    <span class="text-emerald-400">Persistent State Locked</span>
+                  </div>
+
+                  <!-- Inventory tracker -->
+                  <div class="p-3 bg-slate-900/90 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span class="text-slate-400">Admin Inventory:</span>
+                    <span class="text-purple-300">Live Quantity Depletion</span>
+                  </div>
+                </div>
+
+                <!-- Simulation Footer -->
+                <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                  <span>DB Engine: <strong class="text-slate-200">MySQL Transactional</strong></span>
+                  <span class="text-cyan-400 font-medium">Secure Checkout</span>
+                </div>
+              </div>
+
+              <!-- Content Narrative -->
+              <div class="lg:col-span-7 flex flex-col justify-center">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                    E-Commerce Platform
+                  </span>
+                  <span class="text-xs text-slate-400 font-medium">Full-Stack Developer</span>
+                </div>
+
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3">
+                  Zoots — Men's Fashion E-Commerce Platform
+                </h3>
+
+                <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+                  A high-velocity e-commerce storefront dedicated to menswear, engineered for dynamic browsing, frictionless carts, and comprehensive inventory management.
+                </p>
+
+                <!-- Key Implementation Bullet Points -->
+                <ul class="space-y-3 text-xs sm:text-sm text-slate-300 mb-6">
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-bag-shopping text-purple-400 text-xs mt-1.5"></i>
+                    <span><strong>Multi-Attribute Instant Filtering:</strong> High-performance client-side catalog filtering by apparel size, price brackets, style categories, and stock availability.</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-bag-shopping text-purple-400 text-xs mt-1.5"></i>
+                    <span><strong>Persistent Cart State Management:</strong> Seamless shopping cart persistence across browser reloads, combined with server-side inventory locking.</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-bag-shopping text-purple-400 text-xs mt-1.5"></i>
+                    <span><strong>Streamlined Checkout Pipeline:</strong> Multi-step transaction checkout flow validating customer addresses, coupon logic, and order creation.</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <i class="fa-solid fa-bag-shopping text-purple-400 text-xs mt-1.5"></i>
+                    <span><strong>Administrative Inventory & Order Control:</strong> Merchant portal allowing real-time CRUD operations on stock items, SKU variants, and fulfillment tracking.</span>
+                  </li>
+                </ul>
+
+                <!-- Tech Badges -->
+                <div class="flex flex-wrap gap-2 pt-3 border-t border-white/10">
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">React</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Node.js</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Express</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">MySQL</span>
+                  <span class="px-3 py-1 text-xs rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 font-mono">Tailwind CSS</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact" class="py-24 px-6 md:px-12 bg-slate-950/60 relative">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="section-reveal flex flex-col items-center mb-16 text-center">
+          <span class="font-accent text-cyan-400 text-lg sm:text-xl font-normal mb-1">Direct Connection</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Let's Build Something Exceptional Together</h2>
+          <p class="text-slate-400 text-sm max-w-lg mt-3">Whether you have an upcoming project, software engineering role, or technical collaboration, my inbox is open.</p>
+          <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full mt-3"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Contact Direct Channels Left Column -->
+          <div class="section-reveal lg:col-span-5 space-y-6">
+            
+            <div class="glass-panel p-7 sm:p-8 rounded-3xl">
+              <h3 class="text-xl font-bold text-white mb-2">Direct Coordinates</h3>
+              <p class="text-xs text-slate-400 mb-6">Reach out through any channel for a rapid technical response.</p>
+
+              <div class="space-y-4">
+                <!-- Email Item -->
+                <div class="p-4 rounded-2xl bg-slate-900/80 border border-white/5 flex items-center justify-between group hover:border-cyan-500/40 transition-all">
+                  <div class="flex items-center gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+                      <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div>
+                      <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Email</div>
+                      <a href="mailto:Ibrahim.06.dev@gmail.com" class="text-sm font-semibold text-slate-200 hover:text-cyan-300">
+                        Ibrahim.06.dev@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                  <button onclick="copyToClipboard('Ibrahim.06.dev@gmail.com', 'Email copied!')" class="p-2 text-slate-400 hover:text-cyan-300 transition-colors" title="Copy Email">
+                    <i class="fa-regular fa-copy text-sm"></i>
+                  </button>
+                </div>
+
+                <!-- Phone Item -->
+                <div class="p-4 rounded-2xl bg-slate-900/80 border border-white/5 flex items-center justify-between group hover:border-emerald-500/40 transition-all">
+                  <div class="flex items-center gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                      <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div>
+                      <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Phone / WhatsApp</div>
+                      <a href="tel:+201210811640" class="text-sm font-semibold text-slate-200 hover:text-emerald-300">
+                        +20 12 108 116 40
+                      </a>
+                    </div>
+                  </div>
+                  <button onclick="copyToClipboard('+201210811640', 'Phone copied!')" class="p-2 text-slate-400 hover:text-emerald-300 transition-colors" title="Copy Phone">
+                    <i class="fa-regular fa-copy text-sm"></i>
+                  </button>
+                </div>
+
+                <!-- Location Item -->
+                <div class="p-4 rounded-2xl bg-slate-900/80 border border-white/5 flex items-center gap-3.5">
+                  <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+                  <div>
+                    <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Location</div>
+                    <span class="text-sm font-semibold text-slate-200">Nasr City, Cairo, Egypt</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social Links -->
+              <div class="mt-8 pt-6 border-t border-white/5 flex items-center gap-3">
+                <a href="https://github.com/Ibrahim-06" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 rounded-xl glass-panel flex items-center justify-center gap-2 text-slate-300 hover:text-cyan-300 hover:border-cyan-400/50 transition-all text-xs font-semibold group">
+                  <i class="fa-brands fa-github text-base group-hover:scale-110 transition-transform"></i>
+                  <span>GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/ibrahim-mohamed-211-" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 rounded-xl glass-panel flex items-center justify-center gap-2 text-slate-300 hover:text-cyan-300 hover:border-cyan-400/50 transition-all text-xs font-semibold group">
+                  <i class="fa-brands fa-linkedin-in text-base text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Interactive Message Form Right Column -->
+          <div class="section-reveal lg:col-span-7 glass-panel p-8 sm:p-10 rounded-3xl relative">
+            <h3 class="text-xl font-bold text-white mb-2">Send a Direct Transmission</h3>
+            <p class="text-xs text-slate-400 mb-6">Complete the parameters below to dispatch a message directly to my inbox.</p>
+
+            <form id="portfolioContactForm" class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="senderName" class="block text-xs font-medium text-slate-300 mb-1.5">Your Name *</label>
+                  <input type="text" id="senderName" required placeholder="e.g. Alex Vance" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/60 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all">
+                </div>
+                <div>
+                  <label for="senderEmail" class="block text-xs font-medium text-slate-300 mb-1.5">Your Email *</label>
+                  <input type="email" id="senderEmail" required placeholder="e.g. alex@company.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/60 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all">
+                </div>
+              </div>
+
+              <div>
+                <label for="messageSubject" class="block text-xs font-medium text-slate-300 mb-1.5">Subject</label>
+                <input type="text" id="messageSubject" placeholder="e.g. Full-Stack Role / Project Inquiry" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/60 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all">
+              </div>
+
+              <div>
+                <label for="messageBody" class="block text-xs font-medium text-slate-300 mb-1.5">Message Content *</label>
+                <textarea id="messageBody" required rows="4" placeholder="Hello Ibrahim, we are interested in discussing..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/60 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all resize-none"></textarea>
+              </div>
+
+              <button type="submit" id="submitBtn" class="w-full py-4 rounded-xl font-bold text-xs uppercase tracking-wider bg-gradient-to-r from-cyan-400 via-teal-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 shadow-glow-cyan flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5">
+                <span>Dispatch Transmission</span>
+                <i class="fa-solid fa-paper-plane text-xs"></i>
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="glass-panel border-t border-white/5 py-12 px-6 md:px-12 relative z-10">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+      <div>
+        <span class="font-signature text-3xl text-cyan-400 block mb-1">
+          Ibrahim Mohamed
+        </span>
+        <p class="text-xs text-slate-400">
+          Full-Stack Web Developer • Egyptian Chinese University
+        </p>
+      </div>
+
+      <div class="flex items-center gap-6 text-xs text-slate-400">
+        <a href="#about" class="hover:text-cyan-400 transition-colors">About</a>
+        <a href="#skills" class="hover:text-cyan-400 transition-colors">Skills</a>
+        <a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+        <a href="#contact" class="hover:text-cyan-400 transition-colors">Contact</a>
+      </div>
+
+      <div class="text-xs text-slate-500">
+        &copy; <span id="currentYear"></span> Ibrahim Mohamed. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Current Year auto-update
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // 2. Custom Toast Function
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('toastNotification');
+      const toastMessage = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMessage.textContent = message;
+      if (isSuccess) {
+        toastIcon.className = 'fa-solid fa-check text-cyan-400 text-sm';
+      } else {
+        toastIcon.className = 'fa-solid fa-exclamation text-rose-400 text-sm';
+      }
+
+      toast.classList.remove('translate-y-28', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-28', 'opacity-0');
+      }, 3500);
+    }
+
+    // 3. Fallback Clipboard helper
+    function copyToClipboard(text, successMsg) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(successMsg);
+        }).catch(() => {
+          execCopy(text, successMsg);
+        });
+      } else {
+        execCopy(text, successMsg);
+      }
+    }
+
+    function execCopy(text, successMsg) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg);
+      } catch (err) {
+        showToast("Copied to clipboard!");
+      }
+      document.body.removeChild(textArea);
+    }
+
+    // 4. Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // 5. Contact Form Simulation Handler
+    const contactForm = document.getElementById('portfolioContactForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('senderName').value.trim();
+      const email = document.getElementById('senderEmail').value.trim();
+      const body = document.getElementById('messageBody').value.trim();
+
+      if (!name || !email || !body) {
+        showToast('Please fill out all required fields.', false);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Transmitting...</span>`;
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Dispatch Transmission</span> <i class="fa-solid fa-paper-plane text-xs"></i>`;
+        contactForm.reset();
+        showToast(`Thank you, ${name}! Your transmission has been queued.`);
+      }, 1000);
+    });
+
+    // 6. Interactive HTML5 Constellation Particle Canvas
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    let mouse = { x: null, y: null, radius: 150 };
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.7;
+        this.vy = (Math.random() - 0.5) * 0.7;
+        this.radius = Math.random() * 1.8 + 0.8;
+        this.baseColor = Math.random() > 0.4 ? 'rgba(34, 211, 238,' : 'rgba(168, 85, 247,';
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        // Mouse avoidance/repulsion
+        if (mouse.x !== null) {
+          const dx = this.x - mouse.x;
+          const dy = this.y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < mouse.radius) {
+            const angle = Math.atan2(dy, dx);
+            const force = (mouse.radius - distance) / mouse.radius;
+            this.x += Math.cos(angle) * force * 2.5;
+            this.y += Math.sin(angle) * force * 2.5;
+          }
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.baseColor + '0.75)';
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = this.baseColor + '0.5)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    let particles = [];
+    function initParticles() {
+      particles = [];
+      const particleDensity = Math.floor((width * height) / 14000);
+      const count = Math.min(Math.max(particleDensity, 40), 90);
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
+    }
+    initParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        // Connect nearby nodes
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 115) {
+            const alpha = (1 - dist / 115) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(34, 211, 238, ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    window.addEventListener('DOMContentLoaded', () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero Elements Staggered Timeline
+      const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      heroTl.from('.hero-element', {
+        y: 45,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.14,
+        delay: 0.15
+      });
+
+      // Animated Stat Numbers Counter on Viewport Entry
+      ScrollTrigger.create({
+        trigger: '#hero',
+        start: 'top 70%',
+        onEnter: () => {
+          document.querySelectorAll('.stat-number').forEach((counter) => {
+            const target = +counter.getAttribute('data-target');
+            gsap.to(counter, {
+              innerText: target,
+              duration: 2,
+              snap: { innerText: 1 },
+              ease: 'power2.out',
+            });
+          });
+        },
+        once: true
+      });
+
+      // Section Titles & Subtitles ScrollTrigger
+      gsap.utils.toArray('.section-reveal').forEach((elem) => {
+        gsap.from(elem, {
+          scrollTrigger: {
+            trigger: elem,
+            start: 'top 85%',
+          },
+          y: 40,
+          opacity: 0,
+          duration: 0.85,
+          ease: 'power2.out'
+        });
+      });
+
+      // Skill Cards ScrollTrigger
+      gsap.utils.toArray('.skill-matrix-card').forEach((card, idx) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+          },
+          y: 35,
+          opacity: 0,
+          duration: 0.75,
+          delay: idx * 0.1,
+          ease: 'power2.out'
+        });
+      });
+
+      // Project Cards ScrollTrigger
+      gsap.utils.toArray('.project-card').forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+          },
+          y: 50,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out'
+        });
+      });
+
+      // 3D Perspective Tilt on Interactive Cards
+      const tiltCards = document.querySelectorAll('.glass-panel-interactive');
+      tiltCards.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -5;
+          const rotateY = ((x - centerX) / centerX) * 5;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
