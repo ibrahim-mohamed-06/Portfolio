@@ -51,79 +51,99 @@
   </script>
 
   
+
 <script>
 (() => {
   const link = document.getElementById("site-favicon");
   if (!link) return;
 
-  const canvas = document.createElement("canvas");
-  canvas.width = 64;
-  canvas.height = 64;
-
-  const ctx = canvas.getContext("2d");
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const x = c.getContext("2d");
   const start = performance.now();
 
-  function draw(now) {
-    const t = ((now - start) % 3200) / 3200;
-    const typing = Math.min(2, Math.floor(t * 5));
-    const glitch = t > 0.34 && t < 0.43;
-    const cursorOn = Math.floor(now / 300) % 2 === 0;
+  function frame(now) {
+    const t = ((now - start) % 3600) / 3600;
+    const progress = Math.min(1, t / 0.35);
+    const showM = t > 0.20;
+    const glitch = t > 0.58 && t < 0.67;
+    const cursor = Math.floor(now / 350) % 2 === 0;
 
-    ctx.clearRect(0, 0, 64, 64);
+    x.clearRect(0, 0, 64, 64);
 
-    ctx.fillStyle = "#080D0A";
-    ctx.beginPath();
-    ctx.roundRect(3, 3, 58, 58, 13);
-    ctx.fill();
+    // Midnight background
+    x.fillStyle = "#090B1F";
+    x.beginPath();
+    x.roundRect(3, 3, 58, 58, 14);
+    x.fill();
 
-    ctx.strokeStyle = "#00FF88";
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    // Neon hexagon-style frame
+    x.strokeStyle = "#00E5FF";
+    x.lineWidth = 1.8;
+    x.beginPath();
+    x.moveTo(17, 5);
+    x.lineTo(47, 5);
+    x.lineTo(59, 17);
+    x.lineTo(59, 47);
+    x.lineTo(47, 59);
+    x.lineTo(17, 59);
+    x.lineTo(5, 47);
+    x.lineTo(5, 17);
+    x.closePath();
+    x.stroke();
 
-    ctx.save();
+    // Animated neon glow
+    x.shadowBlur = 12;
+    x.shadowColor = "#00E5FF";
+
+    x.font = "bold 29px monospace";
+    x.textAlign = "center";
+    x.textBaseline = "middle";
+
+    x.save();
 
     if (glitch) {
-      ctx.translate(Math.random() * 4 - 2, 0);
+      x.translate(Math.random() * 4 - 2, 0);
     }
 
-    ctx.font = "bold 30px monospace";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    if (typing >= 1) {
-      ctx.fillStyle = glitch ? "#FFFFFF" : "#00FF88";
-      ctx.fillText("I", 19, 31);
+    // Type-on effect: I then M
+    if (t > 0.07) {
+      x.fillStyle = "#00E5FF";
+      x.fillText("I", 19, 30);
     }
 
-    if (typing >= 2) {
-      ctx.fillStyle = "#FFFFFF";
-      ctx.fillText("M", 39, 31);
+    if (showM) {
+      x.fillStyle = "#F8FAFC";
+      x.fillText("M", 40, 30);
     }
 
+    x.restore();
+    x.shadowBlur = 0;
+
+    // Purple glitch slices
     if (glitch) {
-      ctx.fillStyle = "#00FF88";
-      ctx.fillRect(10, 17, 44, 2);
-      ctx.fillRect(18, 42, 32, 2);
+      x.fillStyle = "#A855F7";
+      x.fillRect(12, 19, 40, 2);
+      x.fillRect(20, 42, 29, 2);
     }
 
-    ctx.restore();
-
-    if (typing < 2 && cursorOn) {
-      ctx.fillStyle = "#00FF88";
-      ctx.fillRect(typing === 0 ? 15 : 29, 45, 9, 3);
-    } else if (typing === 2 && cursorOn) {
-      ctx.fillStyle = "#00FF88";
-      ctx.fillRect(53, 25, 3, 15);
+    // Blinking terminal cursor
+    if (cursor) {
+      x.fillStyle = "#A855F7";
+      x.fillRect(showM ? 52 : 29, 43, 5, 3);
     }
 
-    ctx.fillStyle = "#00FF88";
-    ctx.fillRect(10, 52, Math.max(2, t * 40), 2);
+    // Small cyan status light
+    x.fillStyle = "#00E5FF";
+    x.beginPath();
+    x.arc(49, 13, 2.2, 0, Math.PI * 2);
+    x.fill();
 
-    link.href = canvas.toDataURL("image/png");
-    requestAnimationFrame(draw);
+    link.href = c.toDataURL("image/png");
+    requestAnimationFrame(frame);
   }
 
-  requestAnimationFrame(draw);
+  requestAnimationFrame(frame);
 })();
 </script>
 
