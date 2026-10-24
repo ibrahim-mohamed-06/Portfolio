@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>404 - إبراهيم بيسلّم عليك</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js لمجسم ثلاثي الأبعاد هادئ وبسيط -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- خطوط Google Fonts: Marhey المرح و Cairo الأنيق -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Marhey:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    body {
+      font-family: 'Cairo', sans-serif;
+      touch-action: manipulation;
+    }
+    .font-marhey {
+      font-family: 'Marhey', cursive, sans-serif;
+    }
+
+    /* خلفية متدرجة هادية ومريحة جداً للعين (Deep Navy & Soft Violet) */
+    .bg-comfort {
+      background: radial-gradient(ellipse at 50% 25%, #181c3b 0%, #0d1124 60%, #060813 100%);
+    }
+
+    /* كارت زجاجي بلمسة ناعمة وخفيفة بدون بهرجة */
+    .soft-card {
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    /* زرار شيك ورايق */
+    .btn-home {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 24px -4px rgba(99, 102, 241, 0.35);
+    }
+    .btn-home:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -4px rgba(99, 102, 241, 0.5);
+    }
+    .btn-home:active {
+      transform: translateY(1px);
+    }
+  </style>
+</head>
+
+<body class="bg-comfort min-h-screen text-slate-200 flex flex-col justify-between items-center relative overflow-hidden px-4">
+
+  <!-- مشهد 3D للأرقام 404 العائمة التفاعلية في النصف العلوي -->
+  <div id="canvas-container" class="absolute inset-0 z-0 pointer-events-auto cursor-grab active:cursor-grabbing"></div>
+
+  <!-- هالة ضوئية خافتة جداً ومريحة في المنتصف -->
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- ترويسة بسيطة ورايقة -->
+  <header class="w-full max-w-md pt-7 text-center z-10 relative">
+    <span class="inline-flex items-center gap-2 text-xs font-semibold px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-indigo-300 backdrop-blur-md">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      إبراهيم مرابط هنا ومستنيك
+    </span>
+  </header>
+
+  <!-- المحتوى الرئيسي: خفيف، مباشر، ومرح -->
+  <main class="w-full max-w-sm sm:max-w-md my-auto flex flex-col items-center text-center z-10 relative">
+
+    <!-- كارت المحتوى الهادئ الموضوع تحته بمسافة تتيح رؤية الـ 3D بارتياح -->
+    <div class="soft-card w-full p-6 sm:p-8 rounded-3xl mt-44 sm:mt-52">
+
+      <h1 class="text-2xl sm:text-3xl font-bold text-white leading-relaxed mb-3 font-marhey">
+        إبراهيم بيسلّم عليك.. 👋<br>
+        <span class="text-indigo-300 text-lg sm:text-xl font-semibold">
+          وبيقولك مفيش صفحات في الـ Path ده!
+        </span>
+      </h1>
+
+      <p class="text-slate-300/80 text-sm leading-relaxed mb-6 font-normal">
+        شكلك تايه يا غالي أو اللينك ودّاك في داهية.. ولا تشغل بالك، إبراهيم قالنا نرجّعك في ثواني بالسلامة.
+      </p>
+
+      <!-- زر وحيد وواضح للرجوع -->
+      <a href="/" class="btn-home inline-flex items-center justify-center gap-2.5 w-full bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-bold py-3.5 px-6 rounded-2xl text-base transition">
+        <span>رجوع للصفحة الرئيسية</span>
+        <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </a>
+
+      <!-- تلميح تفاعلي لطيف بالعامية -->
+      <div class="mt-4 text-xs text-slate-400/90 flex items-center justify-center gap-1.5">
+        <span>✨</span>
+        <span>حرّك الشاشة أو الماوس وشوف الـ 404 بتلف إزاي</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- تذييل الصفحة البسيط -->
+  <footer class="w-full py-4 text-center text-xs text-slate-500 z-10">
+    حصل خير.. كلنا بنمشي ورا لينكات غلط أحياناً ☕
+  </footer>
+
+  <!-- سكربت Three.js لمجسم رقم 404 العائم بتصميم هندسي راقي وألوان مريحة -->
+  <script>
+    let scene, camera, renderer;
+    let group404, digit1, digit2, digit3;
+    let targetRotationX = 0, targetRotationY = 0;
+
+    function init() {
+      const container = document.getElementById('canvas-container');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+      camera.position.set(0, 0, 7.5);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // إضاءات محيطية ناعمة لا تجهد العين
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
+      scene.add(ambientLight);
+
+      const light1 = new THREE.DirectionalLight(0xa5b4fc, 1.4);
+      light1.position.set(4, 5, 5);
+      scene.add(light1);
+
+      const light2 = new THREE.DirectionalLight(0x818cf8, 0.9);
+      light2.position.set(-5, -2, 3);
+      scene.add(light2);
+
+      // خامة مطفية مع لمعة خفيفة تضفي عمقاً ناعماً (Matte Pastel Indigo)
+      const primaryMat = new THREE.MeshLambertMaterial({ color: 0x818cf8 });
+      const secondaryMat = new THREE.MeshLambertMaterial({ color: 0xc7d2fe });
+      const coreMat = new THREE.MeshLambertMaterial({ color: 0x6366f1 });
+
+      group404 = new THREE.Group();
+
+      // دالة لبناء رقم "4" هندسي ثلاثي الأبعاد بأسلوب ناعم وأنيق
+      function createDigitFour(material) {
+        const group = new THREE.Group();
+        const thickness = 0.38;
+        const radius = 0.18;
+
+        // العمود الرأسي الأساسي
+        const vGeo = new THREE.CylinderGeometry(radius, radius, 1.6, 24);
+        const vMesh = new THREE.Mesh(vGeo, material);
+        vMesh.position.set(0.32, 0, 0);
+        group.add(vMesh);
+
+        // العارضة الأفقية
+        const hGeo = new THREE.CylinderGeometry(radius, radius, 1.0, 24);
+        const hMesh = new THREE.Mesh(hGeo, material);
+        hMesh.rotation.z = Math.PI / 2;
+        hMesh.position.set(-0.06, -0.22, 0);
+        group.add(hMesh);
+
+        // الضلع المائل
+        const dGeo = new THREE.CylinderGeometry(radius, radius, 1.05, 24);
+        const dMesh = new THREE.Mesh(dGeo, material);
+        dMesh.rotation.z = 0.62;
+        dMesh.position.set(-0.25, 0.28, 0);
+        group.add(dMesh);
+
+        // كبسولات كروية ناعمة لإنهاء الحواف بزوايا دائرية
+        const capGeo = new THREE.SphereGeometry(radius, 20, 20);
+        const p1 = new THREE.Mesh(capGeo, material); p1.position.set(0.32, 0.8, 0); group.add(p1);
+        const p2 = new THREE.Mesh(capGeo, material); p2.position.set(0.32, -0.8, 0); group.add(p2);
+        const p3 = new THREE.Mesh(capGeo, material); p3.position.set(-0.55, -0.22, 0); group.add(p3);
+
+        return group;
+      }
+
+      // دالة لبناء رقم "0" مفرغ ناعم ومستدير (Torus ثلاثي الأبعاد)
+      function createDigitZero(material) {
+        const group = new THREE.Group();
+        const torusGeo = new THREE.TorusGeometry(0.55, 0.2, 28, 48);
+        const torusMesh = new THREE.Mesh(torusGeo, material);
+        torusMesh.scale.set(0.85, 1.25, 1);
+        group.add(torusMesh);
+        return group;
+      }
+
+      // بناء الـ 404
+      digit1 = createDigitFour(primaryMat);
+      digit1.position.set(-1.4, 0, 0);
+
+      digit2 = createDigitZero(secondaryMat);
+      digit2.position.set(0, 0, 0.15); // بروز خفيف للأمام
+
+      digit3 = createDigitFour(primaryMat);
+      digit3.position.set(1.4, 0, 0);
+
+      group404.add(digit1);
+      group404.add(digit2);
+      group404.add(digit3);
+
+      // تموضع المجسم في الجزء العلوي المخصص للعرض
+      group404.position.set(0, 1.15, 0);
+      scene.add(group404);
+
+      // حلقات أو جزيئات مدارية خافتة جداً في الخلفية لتعطي عمق هادئ
+      const ringGeo = new THREE.TorusGeometry(2.6, 0.015, 16, 90);
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0x4f46e5, transparent: true, opacity: 0.2 });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = Math.PI * 0.45;
+      group404.add(ring);
+
+      window.addEventListener('resize', onWindowResize);
+      setupInput();
+    }
+
+    function onWindowResize() {
+      const container = document.getElementById('canvas-container');
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+
+      if (window.innerWidth < 640) {
+        group404.scale.set(0.75, 0.75, 0.75);
+        group404.position.set(0, 1.25, 0);
+      } else {
+        group404.scale.set(1, 1, 1);
+        group404.position.set(0, 1.15, 0);
+      }
+    }
+
+    function setupInput() {
+      const handleMove = (x, y) => {
+        const normX = (x / window.innerWidth) * 2 - 1;
+        const normY = -(y / window.innerHeight) * 2 + 1;
+        targetRotationY = normX * 0.45;
+        targetRotationX = -normY * 0.3;
+      };
+
+      window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+          handleMove(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+    }
+
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const t = clock.getElapsedTime();
+
+      if (group404) {
+        // طفو ناعم ومتناسق للمجسم بالكامل
+        group404.position.y += Math.sin(t * 1.5) * 0.0018;
+
+        // حركة تموّج خفيفة ومستقلة لكل رقم ليعطي حياة ومرونة
+        if (digit1) digit1.rotation.y = Math.sin(t * 1.8) * 0.1;
+        if (digit2) digit2.rotation.z = Math.sin(t * 1.4) * 0.08;
+        if (digit3) digit3.rotation.y = -Math.sin(t * 1.8) * 0.1;
+
+        // استجابة سلسة لحركة الماوس واللمس (Easing)
+        group404.rotation.y += (targetRotationY - group404.rotation.y) * 0.06;
+        group404.rotation.x += (targetRotationX - group404.rotation.x) * 0.06;
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    window.onload = function() {
+      init();
+      onWindowResize();
+      animate();
+    };
+  </script>
+
+</body>
+</html>
