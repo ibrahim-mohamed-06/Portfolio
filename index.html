@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link id="site-favicon" rel="icon" type="image/svg+xml" href="/favicon-1.svg">
+  
   <title>Ibrahim Mohamed | Full-Stack Web Developer & Software Engineer</title>
   
   <!-- Google Fonts Preconnect & Stylesheets -->
@@ -46,6 +49,17 @@
       }
     }
   </script>
+
+  <script>
+  const favicon = document.getElementById("site-favicon");
+  const icons = ["/favicon-1.svg", "/favicon-2.svg"];
+  let currentIcon = 0;
+
+  setInterval(() => {
+    currentIcon = 1 - currentIcon;
+    favicon.href = icons[currentIcon] + "?v=" + currentIcon;
+  }, 1000);
+</script>
 
   <style>
     :root {
