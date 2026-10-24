@@ -50,16 +50,83 @@
     }
   </script>
 
-  <script>
-  const favicon = document.getElementById("site-favicon");
-  const icons = ["/favicon-1.svg", "/favicon-2.svg"];
-  let currentIcon = 0;
+  
+<script>
+(() => {
+  const link = document.getElementById("site-favicon");
+  if (!link) return;
 
-  setInterval(() => {
-    currentIcon = 1 - currentIcon;
-    favicon.href = icons[currentIcon] + "?v=" + currentIcon;
-  }, 1000);
+  const canvas = document.createElement("canvas");
+  canvas.width = 64;
+  canvas.height = 64;
+
+  const ctx = canvas.getContext("2d");
+  const start = performance.now();
+
+  function draw(now) {
+    const t = ((now - start) % 3200) / 3200;
+    const typing = Math.min(2, Math.floor(t * 5));
+    const glitch = t > 0.34 && t < 0.43;
+    const cursorOn = Math.floor(now / 300) % 2 === 0;
+
+    ctx.clearRect(0, 0, 64, 64);
+
+    ctx.fillStyle = "#080D0A";
+    ctx.beginPath();
+    ctx.roundRect(3, 3, 58, 58, 13);
+    ctx.fill();
+
+    ctx.strokeStyle = "#00FF88";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.save();
+
+    if (glitch) {
+      ctx.translate(Math.random() * 4 - 2, 0);
+    }
+
+    ctx.font = "bold 30px monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    if (typing >= 1) {
+      ctx.fillStyle = glitch ? "#FFFFFF" : "#00FF88";
+      ctx.fillText("I", 19, 31);
+    }
+
+    if (typing >= 2) {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillText("M", 39, 31);
+    }
+
+    if (glitch) {
+      ctx.fillStyle = "#00FF88";
+      ctx.fillRect(10, 17, 44, 2);
+      ctx.fillRect(18, 42, 32, 2);
+    }
+
+    ctx.restore();
+
+    if (typing < 2 && cursorOn) {
+      ctx.fillStyle = "#00FF88";
+      ctx.fillRect(typing === 0 ? 15 : 29, 45, 9, 3);
+    } else if (typing === 2 && cursorOn) {
+      ctx.fillStyle = "#00FF88";
+      ctx.fillRect(53, 25, 3, 15);
+    }
+
+    ctx.fillStyle = "#00FF88";
+    ctx.fillRect(10, 52, Math.max(2, t * 40), 2);
+
+    link.href = canvas.toDataURL("image/png");
+    requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(draw);
+})();
 </script>
+
 
   <style>
     :root {
